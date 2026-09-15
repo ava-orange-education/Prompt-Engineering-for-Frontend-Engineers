@@ -1,0 +1,108 @@
+{
+  "formId": "leave-request",
+  "title": "Leave Request Form",
+  "description": "Submit a leave request for your manager's review and approval.",
+  "submitLabel": "Submit Leave Request",
+  "successMessage": "Your leave request has been submitted for approval.",
+  "sections": [
+    {
+      "id": "employee",
+      "title": "Employee Details",
+      "columns": 2,
+      "fields": [
+        {
+          "name": "employeeId",
+          "type": "hidden",
+          "label": "Employee ID",
+          "defaultValue": "EMP-10492"
+        },
+        {
+          "name": "employeeName",
+          "type": "text",
+          "label": "Name",
+          "width": "half",
+          "helpText": "Pulled from your profile.",
+          "defaultValue": "Jordan Rivera"
+        },
+        {
+          "name": "employeeDepartment",
+          "type": "text",
+          "label": "Department",
+          "width": "half",
+          "helpText": "Pulled from your profile.",
+          "defaultValue": "Engineering"
+        }
+      ]
+    },
+    {
+      "id": "leaveDetails",
+      "title": "Leave Details",
+      "columns": 2,
+      "fields": [
+        {
+          "name": "leaveType",
+          "type": "select",
+          "label": "Leave Type",
+          "width": "half",
+          "options": [
+            { "label": "Annual", "value": "annual" },
+            { "label": "Sick", "value": "sick" },
+            { "label": "Parental", "value": "parental" },
+            { "label": "Compassionate", "value": "compassionate" },
+            { "label": "Unpaid", "value": "unpaid" }
+          ],
+          "validation": { "required": true }
+        },
+        {
+          "name": "numberOfDays",
+          "type": "number",
+          "label": "Number of Days",
+          "width": "half",
+          "validation": { "required": true, "min": 1, "max": 365 }
+        },
+        {
+          "name": "startDate",
+          "type": "date",
+          "label": "Start Date",
+          "width": "half",
+          "validation": { "required": true }
+        },
+        {
+          "name": "endDate",
+          "type": "date",
+          "label": "End Date",
+          "width": "half",
+          "validation": { "required": true }
+        },
+        {
+          "name": "reason",
+          "type": "textarea",
+          "label": "Reason",
+          "width": "full",
+          "helpText": "Optional for Annual and Parental leave. Required for Sick, Compassionate, and Unpaid leave.",
+          "validation": { "required": true, "maxLength": 1000 }
+        }
+      ]
+    },
+    {
+      "id": "documentation",
+      "title": "Documentation",
+      "columns": 1,
+      "fields": [
+        {
+          "name": "supportingDocument",
+          "type": "file",
+          "label": "Supporting Document",
+          "helpText": "Optional. Accepted formats: PDF, JPG, PNG."
+        },
+        {
+          "name": "notes",
+          "type": "textarea",
+          "label": "Additional Notes",
+          "helpText": "Optional. Anything else your manager should know.",
+          "validation": { "maxLength": 1000 }
+        }
+      ]
+    }
+  ]
+}

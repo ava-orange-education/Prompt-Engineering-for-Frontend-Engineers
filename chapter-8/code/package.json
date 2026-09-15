@@ -1,0 +1,14 @@
+{
+  "name": "formforge",
+  "private": true,
+  "workspaces": ["packages/types", "packages/api", "packages/web"],
+  "scripts": {
+    "dev": "npm run build -w packages/types && concurrently \"npm run start:dev -w packages/api\" \"npm run dev -w packages/web\"",
+    "build": "npm run build -w packages/types && npm run build -w packages/api && npm run build -w packages/web",
+    "test": "npm run build -w packages/types && npm run test --workspaces --if-present -- --passWithNoTests",
+    "test:e2e": "npm run build -w packages/types && npm run test:e2e -w packages/api"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.0"
+  }
+}

@@ -1,0 +1,251 @@
+{
+  "formId": "employee-onboarding",
+  "title": "Employee Onboarding Form",
+  "description": "Tell us a bit about yourself so we can get you set up.",
+  "submitLabel": "Submit Onboarding Form",
+  "successMessage": "Welcome to the team! Your information has been submitted.",
+  "sections": [
+    {
+      "id": "personal",
+      "title": "Personal Details",
+      "columns": 2,
+      "fields": [
+        {
+          "name": "firstName",
+          "type": "text",
+          "label": "First Name",
+          "width": "half",
+          "validation": { "required": true, "minLength": 2, "maxLength": 50 }
+        },
+        {
+          "name": "lastName",
+          "type": "text",
+          "label": "Last Name",
+          "width": "half",
+          "validation": { "required": true, "minLength": 2, "maxLength": 50 }
+        },
+        {
+          "name": "email",
+          "type": "email",
+          "label": "Email Address",
+          "width": "half",
+          "validation": { "required": true, "email": true }
+        },
+        {
+          "name": "phone",
+          "type": "tel",
+          "label": "Phone Number",
+          "width": "half",
+          "placeholder": "+14155552671",
+          "validation": {
+            "required": true,
+            "pattern": "^\\+[1-9]\\d{6,14}$",
+            "message": "Enter phone in E.164 format, e.g. +447911123456"
+          }
+        },
+        {
+          "name": "dateOfBirth",
+          "type": "date",
+          "label": "Date of Birth",
+          "width": "half",
+          "validation": { "required": true }
+        },
+        {
+          "name": "gender",
+          "type": "radio",
+          "label": "Gender",
+          "width": "half",
+          "options": [
+            { "label": "Female", "value": "female" },
+            { "label": "Male", "value": "male" },
+            { "label": "Non-binary", "value": "non-binary" },
+            { "label": "Prefer not to say", "value": "prefer-not-to-say" }
+          ],
+          "validation": { "required": true }
+        }
+      ]
+    },
+    {
+      "id": "employment",
+      "title": "Employment Information",
+      "columns": 1,
+      "fields": [
+        {
+          "name": "jobTitle",
+          "type": "text",
+          "label": "Job Title",
+          "validation": { "required": true, "minLength": 2, "maxLength": 100 }
+        },
+        {
+          "name": "department",
+          "type": "select",
+          "label": "Department",
+          "options": [
+            { "label": "Engineering", "value": "engineering" },
+            { "label": "Product", "value": "product" },
+            { "label": "Design", "value": "design" },
+            { "label": "Sales", "value": "sales" },
+            { "label": "Marketing", "value": "marketing" },
+            { "label": "Customer Support", "value": "customer-support" }
+          ],
+          "validation": { "required": true }
+        },
+        {
+          "name": "startDate",
+          "type": "date",
+          "label": "Start Date",
+          "validation": { "required": true }
+        },
+        {
+          "name": "employmentType",
+          "type": "radio",
+          "label": "Employment Type",
+          "options": [
+            { "label": "Full-time", "value": "fulltime" },
+            { "label": "Part-time", "value": "parttime" },
+            { "label": "Contractor", "value": "contractor" }
+          ],
+          "validation": { "required": true }
+        },
+        {
+          "name": "contractEndDate",
+          "type": "date",
+          "label": "Contract End Date",
+          "visibleWhen": { "dependsOn": "employmentType", "operator": "eq", "value": "contractor" },
+          "validation": { "required": true }
+        },
+        {
+          "name": "partTimeHours",
+          "type": "number",
+          "label": "Weekly Hours",
+          "placeholder": "e.g. 20",
+          "visibleWhen": { "dependsOn": "employmentType", "operator": "eq", "value": "parttime" },
+          "validation": {
+            "required": true,
+            "min": 4,
+            "max": 32,
+            "message": "Please enter your weekly contracted hours"
+          }
+        },
+        {
+          "name": "salaryExpectation",
+          "type": "number",
+          "label": "Salary Expectation",
+          "helpText": "Annual salary in USD.",
+          "visibleWhen": { "dependsOn": "employmentType", "operator": "neq", "value": "contractor" },
+          "validation": {
+            "min": 10000,
+            "max": 1000000,
+            "message": "Please enter an annual salary between $10,000 and $1,000,000"
+          }
+        },
+        {
+          "name": "remoteWork",
+          "type": "checkbox",
+          "label": "I will be working remotely",
+          "defaultValue": false
+        }
+      ]
+    },
+    {
+      "id": "emergency",
+      "title": "Emergency Contact",
+      "columns": 2,
+      "fields": [
+        {
+          "name": "emergencyContactName",
+          "type": "text",
+          "label": "Contact Name",
+          "width": "half",
+          "validation": { "required": true, "minLength": 2, "maxLength": 100 }
+        },
+        {
+          "name": "emergencyRelationship",
+          "type": "select",
+          "label": "Relationship",
+          "width": "half",
+          "options": [
+            { "label": "Spouse", "value": "spouse" },
+            { "label": "Parent", "value": "parent" },
+            { "label": "Sibling", "value": "sibling" },
+            { "label": "Friend", "value": "friend" },
+            { "label": "Other", "value": "other" }
+          ],
+          "validation": { "required": true }
+        },
+        {
+          "name": "emergencyPhone",
+          "type": "tel",
+          "label": "Emergency Phone",
+          "width": "half",
+          "placeholder": "+14155552671",
+          "validation": {
+            "required": true,
+            "pattern": "^\\+[1-9]\\d{6,14}$",
+            "message": "Enter phone in E.164 format, e.g. +447911123456"
+          }
+        },
+        {
+          "name": "emergencyEmail",
+          "type": "email",
+          "label": "Emergency Email",
+          "width": "half",
+          "validation": { "email": true }
+        }
+      ]
+    },
+    {
+      "id": "itSetup",
+      "title": "IT Setup",
+      "columns": 1,
+      "fields": [
+        {
+          "name": "preferredOs",
+          "type": "radio",
+          "label": "Preferred OS",
+          "options": [
+            { "label": "macOS", "value": "macos" },
+            { "label": "Windows", "value": "windows" },
+            { "label": "Linux", "value": "linux" }
+          ],
+          "validation": { "required": true }
+        },
+        {
+          "name": "equipment",
+          "type": "checkbox-group",
+          "label": "Equipment",
+          "options": [
+            { "label": "Laptop", "value": "laptop" },
+            { "label": "External Monitor", "value": "external-monitor" },
+            { "label": "Keyboard", "value": "keyboard" },
+            { "label": "Mouse", "value": "mouse" },
+            { "label": "Desk", "value": "desk" }
+          ]
+        },
+        {
+          "name": "githubUsername",
+          "type": "text",
+          "label": "GitHub Username",
+          "validation": {
+            "maxLength": 39,
+            "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9-]{0,37}[a-zA-Z0-9])?$",
+            "message": "Enter a valid GitHub username"
+          }
+        },
+        {
+          "name": "slackDisplayName",
+          "type": "text",
+          "label": "Slack Display Name",
+          "validation": { "required": true, "minLength": 2, "maxLength": 80 }
+        },
+        {
+          "name": "accessibilityNeeds",
+          "type": "textarea",
+          "label": "Accessibility Needs",
+          "helpText": "Confidential. Used only to set up your workspace correctly.",
+          "validation": { "maxLength": 500 }
+        }
+      ]
+    }
+  ]
+}

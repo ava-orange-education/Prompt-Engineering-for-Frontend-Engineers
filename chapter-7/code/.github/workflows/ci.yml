@@ -1,0 +1,54 @@
+name: CI / Deploy
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: chapter-7/code/package-lock.json
+      - run: npm ci
+        working-directory: chapter-7/code
+      - name: Lint
+        run: npm run lint
+        working-directory: chapter-7/code
+      - name: Unit Tests
+        run: npm run test
+        working-directory: chapter-7/code
+      - name: Build
+        run: npm run build
+        working-directory: chapter-7/code
+      - name: Deploy to Vercel
+        if: github.ref == 'refs/heads/main'
+        run: npx vercel --token ${{ secrets.VERCEL_TOKEN }} --prod
+        working-directory: chapter-7/code
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  e2e:
+    needs: build-and-deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: chapter-7/code/package-lock.json
+      - run: npm ci
+        working-directory: chapter-7/code
+      - run: npx playwright install --with-deps chromium
+        working-directory: chapter-7/code
+      - name: Build
+        run: npm run build
+        working-directory: chapter-7/code
+      - name: Run e2e tests against the production build
+        run: npm run test:e2e
+        working-directory: chapter-7/code

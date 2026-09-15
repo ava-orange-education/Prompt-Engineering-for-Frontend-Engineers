@@ -1,0 +1,45 @@
+# syntax=docker/dockerfile:1
+
+# ---------- Builder ----------
+FROM node:24-alpine AS builder
+
+WORKDIR /app
+
+# Install deps for the whole workspace (needed for npm workspaces linking)
+COPY package.json package-lock.json ./
+COPY packages/types/package.json ./packages/types/package.json
+COPY packages/api/package.json ./packages/api/package.json
+COPY packages/web/package.json ./packages/web/package.json
+
+RUN npm ci
+
+# @formforge/types is a workspace dependency of the API, so it has to be
+# built to dist/ before `nest build` can resolve its declared types/exports.
+COPY packages/types ./packages/types
+RUN npm run build --workspace=packages/types
+
+COPY packages/api ./packages/api
+RUN npm run build --workspace=packages/api
+
+# ---------- Production ----------
+FROM node:24-alpine AS production
+
+ENV NODE_ENV=production
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+COPY packages/types/package.json ./packages/types/package.json
+COPY packages/api/package.json ./packages/api/package.json
+
+RUN npm ci --omit=dev --workspace=packages/api --workspace=packages/types && npm cache clean --force
+
+COPY --from=builder /app/packages/types/dist ./packages/types/dist
+COPY --from=builder /app/packages/api/dist ./packages/api/dist
+
+COPY configs ./configs
+
+EXPOSE 3000
+
+USER node
+
+CMD ["node", "packages/api/dist/main.js"]

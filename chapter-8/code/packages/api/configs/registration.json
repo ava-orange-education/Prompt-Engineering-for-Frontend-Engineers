@@ -1,0 +1,55 @@
+{
+  "formId": "registration",
+  "title": "Create Your Account",
+  "submitLabel": "Create Account",
+  "successMessage": "Welcome aboard!",
+  "sections": [
+    {
+      "id": "personal",
+      "title": "Personal Information",
+      "columns": 2,
+      "fields": [
+        { "name": "firstName", "type": "text", "label": "First Name",
+          "width": "half", "validation": { "required": true, "minLength": 2 } },
+        { "name": "lastName", "type": "text", "label": "Last Name",
+          "width": "half", "validation": { "required": true } },
+        { "name": "email", "type": "email", "label": "Email Address",
+          "validation": { "required": true, "email": true } },
+        { "name": "gender", "type": "select", "label": "Gender",
+          "validation": { "required": true }, "width": "half",
+          "options": [
+            { "label": "Female", "value": "female" },
+            { "label": "Male", "value": "male" },
+            { "label": "Non-binary", "value": "nonbinary" }
+          ] }
+      ]
+    },
+    {
+      "id": "account",
+      "title": "Account Setup",
+      "columns": 1,
+      "fields": [
+        { "name": "username", "type": "text", "label": "Username",
+          "validation": {
+            "required": true, "minLength": 3, "maxLength": 20,
+            "pattern": "^[a-zA-Z0-9_]+$",
+            "message": "Letters, numbers, and underscores only."
+          } },
+        { "name": "password", "type": "password", "label": "Password",
+          "validation": {
+            "required": true, "minLength": 8,
+            "pattern": "^(?=.*[A-Z])(?=.*[0-9]).+$"
+          } },
+        { "name": "role", "type": "select", "label": "Account Type",
+          "options": [
+            { "label": "User", "value": "user" },
+            { "label": "Admin", "value": "admin" }
+          ],
+          "validation": { "required": true } },
+        { "name": "orgName", "type": "text", "label": "Organisation Name",
+          "visibleWhen": { "dependsOn": "role", "operator": "eq", "value": "admin" },
+          "validation": { "required": true } }
+      ]
+    }
+  ]
+}

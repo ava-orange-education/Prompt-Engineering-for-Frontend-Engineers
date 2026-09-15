@@ -1,0 +1,26 @@
+{
+  "formId": "feedback",
+  "title": "Share Your Feedback",
+  "submitLabel": "Send Feedback",
+  "successMessage": "Thank you!",
+  "sections": [
+    {
+      "id": "main",
+      "columns": 1,
+      "fields": [
+        { "name": "subject", "type": "select", "label": "Category",
+          "options": [
+            { "label": "Bug Report", "value": "bug" },
+            { "label": "Feature Request", "value": "feature" }
+          ],
+          "validation": { "required": true } },
+        { "name": "message", "type": "textarea", "label": "Your Message",
+          "validation": { "required": true, "minLength": 20, "maxLength": 1000 } },
+        { "name": "rating", "type": "rating", "label": "Overall Satisfaction",
+          "validation": { "required": true, "min": 1, "max": 5 } },
+        { "name": "screenshot", "type": "file", "label": "Attach Screenshot (optional)",
+          "attrs": { "accept": "image/*" } }
+      ]
+    }
+  ]
+}

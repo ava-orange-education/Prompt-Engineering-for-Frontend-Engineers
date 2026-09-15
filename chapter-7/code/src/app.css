@@ -1,0 +1,12 @@
+@import 'tailwindcss';
+
+/* Dark mode via class strategy: add/remove `dark` on <html> */
+@variant dark (.dark &);
+
+@theme {
+  --color-blue-50: #eff6ff;
+  --color-blue-300: #93c5fd;
+  --color-blue-400: #60a5fa;
+  --color-blue-500: #3b82f6;
+  --color-blue-600: #2563eb;
+}

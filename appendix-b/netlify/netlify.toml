@@ -1,0 +1,10 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# SPA fallback: send every path that isn't a static asset to index.html
+# so client-side routing (React Router, etc.) can handle it.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
